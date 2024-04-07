@@ -1,0 +1,33 @@
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+
+'''
+url = "https://www.pro-football-reference.com/teams/nyg/2020.htm"
+df = pd.read_html(url)[0]
+
+df.to_csv("NYG2020.csv")
+'''
+
+
+# https://stmorse.github.io/journal/pfr-scrape-python.html
+
+scrapedPage = requests.get("https://www.pro-footballf-reference.com/teams/nyg/2020.htm")
+
+soup = BeautifulSoup(scrapedPage.text, "lxml")
+
+teamStats = soup.find("table", id="team_stats")
+
+statType = []
+for x in teamStats.find_all("th"):
+    title = x.text
+    statType.append(x)
+
+print(statType)
+
+'''
+https://www.sports-reference.com/bot-traffic.html
+https://stackoverflow.com/questions/63385657/scraping-a-team-stats-table-from-python-using-bs4
+https://www.youtube.com/watch?v=XNhOs2bVHMo
+https://stackoverflow.com/questions/48217969/scraping-pfr-football-data-with-python-for-a-beginner
+'''
